@@ -800,6 +800,10 @@ p { margin-bottom: 1rem; font-size: 1.05rem; }
   font-weight: 600;
   font-size: 0.85rem;
   color: var(--dark-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60px;
 }
 
 /* ===== Responsive ===== */
