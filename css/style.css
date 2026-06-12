@@ -775,6 +775,13 @@ p { margin-bottom: 1rem; font-size: 1.05rem; }
   font-size: 0.95rem;
 }
 
+.content-sidebar .btn,
+.content-sidebar .btn-secondary,
+.content-sidebar .btn-primary,
+.content-sidebar .btn-outline {
+  color: var(--white);
+}
+
 .content-sidebar a:hover {
   text-decoration: underline;
 }
