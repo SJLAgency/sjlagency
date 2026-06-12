@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EZLife Application | SJL Insurance Agency</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      color: #444;
+      line-height: 1.6;
+      background: #F8F7F4;
+      min-height: 100vh;
+    }
+    .hero-banner {
+      background: #1B1B2F;
+      color: #fff;
+      padding: 100px 0 50px;
+      text-align: center;
+    }
+    .hero-banner h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .hero-banner h1 span { color: #C9A84C; }
+    .hero-banner p {
+      color: rgba(255,255,255,0.8);
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1.05rem;
+    }
+    .hero-banner .subtitle {
+      color: #C9A84C;
+      font-size: 0.85rem;
+      margin-top: 8px;
+      font-style: italic;
+    }
+    .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+    .form-wrapper { padding: 30px 0 60px; }
+
+    /* Step indicator */
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 30px;
+    }
+    .step-dot {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      transition: all 0.3s;
+    }
+    .step-dot.active { background: #C9A84C; color: #fff; }
+    .step-dot.inactive { background: #E0E0E0; color: #999; }
+    .step-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: none;
+    }
+    .step-label.active { color: #1B1B2F; font-weight: 600; display: inline; }
+    .step-label.inactive { color: #999; display: inline; }
+    .step-connector {
+      width: 24px; height: 2px;
+      background: #E0E0E0;
+    }
+    @media (max-width: 640px) {
+      .step-label { display: none !important; }
+      .step-connector { width: 16px; }
+    }
+
+    /* Card */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .card h2 {
+      font-size: 1.3rem;
+      color: #1B1B2F;
+      margin-bottom: 4px;
+    }
+    .card .card-sub {
+      color: #999;
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+    }
+
+    /* Form fields */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .form-grid .full { grid-column: 1 / -1; }
+    .form-grid .half-left { grid-column: 1 / 2; }
+    .form-grid .half-right { grid-column: 2 / 3; }
+    @media (max-width: 640px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-grid .full { grid-column: 1; }
+      .form-grid .half-left { grid-column: 1; }
+      .form-grid .half-right { grid-column: 1; }
+    }
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #1B1B2F;
+      margin-bottom: 4px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #DDD;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: all 0.2s;
+      background: #fff;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #C9A84C;
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.2);
+    }
+    .mb-3 { margin-bottom: 14px; }
+    .mb-4 { margin-bottom: 20px; }
+    .mb-6 { margin-bottom: 28px; }
+
+    /* Buttons */
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: inherit;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: #C9A84C;
+      color: #1B1B2F;
+    }
+    .btn-primary:hover {
+      background: #E8D48B;
+      transform: translateY(-1px);
+    }
+    .btn-primary:disabled {
+      background: #CCC;
+      color: #888;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .btn-secondary {
+      background: transparent;
+      color: #1B1B2F;
+      border-color: #1B1B2F;
+    }
+    .btn-secondary:hover {
+      background: #1B1B2F;
+      color: #fff;
+    }
+    .btn-home {
+      background: #1B1B2F;
+      color: #fff;
+    }
+    .btn-home:hover {
+      background: #2D2D4A;
+    }
+    .btn-gold-outline {
+      background: transparent;
+      color: #C9A84C;
+      border-color: #C9A84C;
+    }
+    .btn-gold-outline:hover {
+      background: #C9A84C;
+      color: #1B1B2F;
+    }
+
+    /* Beneficiary card */
+    .benef-card {
+      background: #F8F7F4;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 14px;
+      border: 1px solid #EEE;
+    }
+    .benef-card h3 {
+      font-size: 1rem;
+      color: #1B1B2F;
+      margin-bottom: 12px;
+    }
+    .benef-card h3 span {
+      font-weight: 400;
+      color: #999;
+      font-size: 0.85rem;
+    }
+
+    /* Alert */
+    .alert {
+      background: #FFF0F0;
+      border: 1px solid #FFD0D0;
+      color: #CC0000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+    .alert:empty { display: none; }
+
+    /* Success */
+    .success-page {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .success-inner {
+      text-align: center;
+      max-width: 500px;
+      padding: 40px 20px;
+    }
+    .success-inner .check { font-size: 3rem; margin-bottom: 16px; }
+    .success-inner h1 {
+      font-size: 1.8rem;
+      color: #1B1B2F;
+      margin-bottom: 12px;
+    }
+    .success-inner p {
+      color: #666;
+      margin-bottom: 24px;
+    }
+    .success-inner .btn-row { justify-content: center; }
+
+    /* Footer branding */
+    .form-footer {
+      text-align: center;
+      padding: 20px 0;
+      border-top: 1px solid #E0DDD8;
+      margin-top: 30px;
+    }
+    .form-footer p {
+      font-size: 0.8rem;
+      color: #999;
+      margin-bottom: 2px;
+    }
+    .form-footer strong { color: #1B1B2F; }
+  </style>
+</head>
+<body>
+
+<!-- ===== Hero ===== -->
+<header class="hero-banner">
+  <h1><span>EZLife</span> Application</h1>
+  <p>Complete the application and Seth will take it from here. No obligation — just a quick start.</p>
+  <p class="subtitle">As seen on TERM4SALE.com</p>
+</header>
+
+<!-- ===== Form ===== -->
+<div class="form-wrapper" id="app">
+  <!-- Step Indicator -->
+  <div class="step-indicator" v-if="!submitted">
+    <div v-for="(s, i) in steps" :key="i">
+      <div class="step-dot" :class="step >= s.num ? 'active' : 'inactive'">{{ s.num }}</div>
+      <span class="step-label" :class="step >= s.num ? 'active' : 'inactive'">{{ s.label }}</span>
+    </div>
+    <div v-for="(s, i) in steps" :key="'conn-'+i">
+      <div class="step-connector" v-if="i < steps.length - 1"></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- ===== STEP 1: Insured Info ===== -->
+    <div v-if="step === 1 && !submitted">
+      <div class="card">
+        <h2>Your Information</h2>
+        <p class="card-sub">Section 2 — Proposed Insured</p>
+
+        <div class="form-grid mb-4">
+          <div>
+            <label>First Name</label>
+            <input v-model="insured.firstName" placeholder="John">
+          </div>
+          <div>
+            <label>Middle Name</label>
+            <input v-model="insured.middleName">
+          </div>
+          <div class="full">
+            <label>Last Name</label>
+            <input v-model="insured.lastName" placeholder="Smith">
+          </div>
+        </div>
+
+        <div class="form-grid mb-4">
+          <div>
+            <label>Date of Birth</label>
+            <input type="date" v-model="insured.dob">
+          </div>
+          <div>
+            <label>Sex</label>
+            <select v-model="insured.sex">
+              <option value="">Select...</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+          <div>
+            <label>Height</label>
+            <input v-model="insured.height" placeholder="5'10&quot;">
+          </div>
+          <div>
+            <label>Weight (lbs)</label>
+            <input v-model="insured.weight" placeholder="175">
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label>Street Address</label>
+          <input v-model="insured.address" placeholder="123 Main St">
+        </div>
+
+        <div class="form-grid mb-4">
+          <div>
+            <label>City</label>
+            <input v-model="insured.city">
+          </div>
+          <div>
+            <label>State</label>
+            <input v-model="insured.state" placeholder="TX" maxlength="2">
+          </div>
+          <div>
+            <label>ZIP Code</label>
+            <input v-model="insured.zip" placeholder="75001" maxlength="5">
+          </div>
+        </div>
+
+        <div class="form-grid mb-4">
+          <div>
+            <label>Home Phone</label>
+            <input v-model="insured.homePhone" placeholder="(555) 123-4567">
+          </div>
+          <div>
+            <label>Cell Phone</label>
+            <input v-model="insured.cell">
+          </div>
+          <div>
+            <label>Work Phone</label>
+            <input v-model="insured.workPhone">
+          </div>
+        </div>
+
+        <div class="form-grid mb-4">
+          <div>
+            <label>Email</label>
+            <input type="email" v-model="insured.email" placeholder="john@example.com">
+          </div>
+          <div>
+            <label>Best Time to Contact</label>
+            <select v-model="insured.bestTime">
+              <option value="">Select...</option>
+              <option value="Morning">Morning</option>
+              <option value="Afternoon">Afternoon</option>
+              <option value="Evening">Evening</option>
+              <option value="ASAP">ASAP</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-grid mb-4">
+          <div>
+            <label>Driver's License #</label>
+            <input v-model="insured.dlNumber">
+          </div>
+          <div>
+            <label>SSN #</label>
+            <input v-model="insured.ssn" placeholder="XXX-XX-XXXX">
+          </div>
+        </div>
+
+        <div class="form-grid mb-4">
+          <div>
+            <label>U.S. Citizen</label>
+            <select v-model="insured.usCitizen">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          <div>
+            <label>Birth Place</label>
+            <input v-model="insured.birthPlace" placeholder="City, State">
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label>Occupation</label>
+          <input v-model="insured.occupation">
+        </div>
+
+        <div class="form-grid">
+          <div>
+            <label>Annual Income ($)</label>
+            <input type="number" v-model="insured.annualIncome">
+          </div>
+          <div>
+            <label>Assets ($)</label>
+            <input type="number" v-model="insured.assets">
+          </div>
+          <div>
+            <label>Liabilities ($)</label>
+            <input type="number" v-model="insured.liabilities">
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row" style="justify-content:flex-end">
+        <button class="btn btn-primary" @click="step = 2">Next — Rate & Plan →</button>
+      </div>
+    </div>
+
+    <!-- ===== STEP 2: Rate & Plan ===== -->
+    <div v-if="step === 2 && !submitted">
+      <div class="card">
+        <h2>Rate & Plan Information</h2>
+        <p class="card-sub">Section 3 — Optional</p>
+
+        <div class="form-grid mb-4">
+          <div>
+            <label>Carrier</label>
+            <input v-model="rate.carrier" placeholder="e.g. Banner Life">
+          </div>
+          <div>
+            <label>Plan</label>
+            <input v-model="rate.plan" placeholder="e.g. OPTerm 30">
+          </div>
+        </div>
+
+        <div class="form-grid mb-4">
+          <div>
+            <label>Face Amount ($)</label>
+            <input type="number" v-model="rate.faceAmount" placeholder="e.g. 500000">
+          </div>
+          <div>
+            <label>Rate Class</label>
+            <input v-model="rate.rateClass" placeholder="e.g. Preferred Plus">
+          </div>
+        </div>
+
+        <div class="form-grid mb-4">
+          <div>
+            <label>Modal Premium ($)</label>
+            <input type="number" step="0.01" v-model="rate.modalPremium" placeholder="e.g. 186.52">
+          </div>
+          <div>
+            <label>Mode</label>
+            <select v-model="rate.mode">
+              <option value="Annual">Annual</option>
+              <option value="Semi-Annual">Semi-Annual</option>
+              <option value="Quarterly">Quarterly</option>
+              <option value="Monthly">Monthly</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-grid mb-4">
+          <div>
+            <label>Payment Plan</label>
+            <select v-model="rate.paymentPlan">
+              <option value="Credit">Credit Card</option>
+              <option value="EFT">EFT (Bank Draft)</option>
+            </select>
+          </div>
+          <div>
+            <label>Bind</label>
+            <select v-model="rate.bind">
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label>Riders</label>
+          <input v-model="rate.riders" placeholder="e.g. ADB, Waiver of Premium">
+        </div>
+
+        <div class="mb-4">
+          <label>Existing Insurance</label>
+          <input v-model="rate.existingInsurance" placeholder="Describe any existing policies">
+        </div>
+
+        <div class="mb-4">
+          <label>Do you plan to cancel another policy & replace it with this one?</label>
+          <select v-model="rate.replacement">
+            <option value="">Select...</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Purpose for Insurance</label>
+          <input v-model="rate.purpose" placeholder="e.g. Income protection, mortgage, family security">
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" @click="step = 1">← Back</button>
+        <button class="btn btn-primary" @click="step = 3">Next — Owner Info →</button>
+      </div>
+    </div>
+
+    <!-- ===== STEP 3: Owner Info ===== -->
+    <div v-if="step === 3 && !submitted">
+      <div class="card">
+        <h2>Owner Information</h2>
+        <p class="card-sub">Section 4</p>
+
+        <div class="mb-6">
+          <label>Is the insured the owner of the insurance policy?</label>
+          <select v-model="owner.isInsuredOwner">
+            <option value="Yes">Yes — Skip this section</option>
+            <option value="No">No — I need to enter owner/trust info</option>
+          </select>
+        </div>
+
+        <div v-if="owner.isInsuredOwner === 'No'">
+          <div class="form-grid mb-4">
+            <div>
+              <label>Owner/Trust Name</label>
+              <input v-model="owner.ownerName">
+            </div>
+            <div>
+              <label>Trustee Name</label>
+              <input v-model="owner.trusteeName">
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label>Street Address</label>
+            <input v-model="owner.address">
+          </div>
+
+          <div class="form-grid mb-4">
+            <div>
+              <label>City</label>
+              <input v-model="owner.city">
+            </div>
+            <div>
+              <label>State</label>
+              <input v-model="owner.state" maxlength="2">
+            </div>
+            <div>
+              <label>ZIP</label>
+              <input v-model="owner.zip" maxlength="5">
+            </div>
+          </div>
+
+          <div class="form-grid mb-4">
+            <div>
+              <label>Tax ID #</label>
+              <input v-model="owner.taxId">
+            </div>
+            <div>
+              <label>Trust Date</label>
+              <input type="date" v-model="owner.trustDate">
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div>
+              <label>Trust State</label>
+              <input v-model="owner.trustState" maxlength="2">
+            </div>
+            <div>
+              <label>Trust Type</label>
+              <select v-model="owner.trustType">
+                <option value="Revocable">Revocable</option>
+                <option value="Irrevocable">Irrevocable</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" @click="step = 2">← Back</button>
+        <button class="btn btn-primary" @click="step = 4">Next — Beneficiaries →</button>
+      </div>
+    </div>
+
+    <!-- ===== STEP 4: Beneficiaries ===== -->
+    <div v-if="step === 4 && !submitted">
+      <div class="card">
+        <h2>Beneficiaries</h2>
+        <p class="card-sub">Section 5 — All fields optional</p>
+
+        <!-- Primary #1 -->
+        <div class="benef-card">
+          <h3>Primary Beneficiary #1</h3>
+          <div class="form-grid">
+            <div class="full">
+              <label>Full Name</label>
+              <input v-model="beneficiaries.primary1.fullName">
+            </div>
+            <div>
+              <label>DOB</label>
+              <input type="date" v-model="beneficiaries.primary1.dob">
+            </div>
+            <div>
+              <label>Percentage (%)</label>
+              <input v-model="beneficiaries.primary1.percent" placeholder="100">
+            </div>
+            <div>
+              <label>Relationship</label>
+              <input v-model="beneficiaries.primary1.relationship" placeholder="Spouse">
+            </div>
+            <div>
+              <label>SSN #</label>
+              <input v-model="beneficiaries.primary1.ssn">
+            </div>
+          </div>
+        </div>
+
+        <!-- Primary #2 -->
+        <div class="benef-card">
+          <h3>Primary Beneficiary #2 <span>(optional)</span></h3>
+          <div class="form-grid">
+            <div class="full">
+              <label>Full Name</label>
+              <input v-model="beneficiaries.primary2.fullName">
+            </div>
+            <div>
+              <label>DOB</label>
+              <input type="date" v-model="beneficiaries.primary2.dob">
+            </div>
+            <div>
+              <label>Percentage (%)</label>
+              <input v-model="beneficiaries.primary2.percent" placeholder="50">
+            </div>
+            <div>
+              <label>Relationship</label>
+              <input v-model="beneficiaries.primary2.relationship">
+            </div>
+            <div>
+              <label>SSN #</label>
+              <input v-model="beneficiaries.primary2.ssn">
+            </div>
+          </div>
+        </div>
+
+        <!-- Contingent #1 -->
+        <div class="benef-card">
+          <h3>Contingent Beneficiary #1 <span>(optional)</span></h3>
+          <div class="form-grid">
+            <div class="full">
+              <label>Full Name</label>
+              <input v-model="beneficiaries.contingent1.fullName">
+            </div>
+            <div>
+              <label>DOB</label>
+              <input type="date" v-model="beneficiaries.contingent1.dob">
+            </div>
+            <div>
+              <label>Percentage (%)</label>
+              <input v-model="beneficiaries.contingent1.percent" placeholder="100">
+            </div>
+            <div>
+              <label>Relationship</label>
+              <input v-model="beneficiaries.contingent1.relationship">
+            </div>
+            <div>
+              <label>SSN #</label>
+              <input v-model="beneficiaries.contingent1.ssn">
+            </div>
+          </div>
+        </div>
+
+        <!-- Contingent #2 -->
+        <div class="benef-card">
+          <h3>Contingent Beneficiary #2 <span>(optional)</span></h3>
+          <div class="form-grid">
+            <div class="full">
+              <label>Full Name</label>
+              <input v-model="beneficiaries.contingent2.fullName">
+            </div>
+            <div>
+              <label>DOB</label>
+              <input type="date" v-model="beneficiaries.contingent2.dob">
+            </div>
+            <div>
+              <label>Percentage (%)</label>
+              <input v-model="beneficiaries.contingent2.percent" placeholder="50">
+            </div>
+            <div>
+              <label>Relationship</label>
+              <input v-model="beneficiaries.contingent2.relationship">
+            </div>
+            <div>
+              <label>SSN #</label>
+              <input v-model="beneficiaries.contingent2.ssn">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert" v-if="error">{{ error }}</div>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" @click="step = 3">← Back</button>
+        <button class="btn btn-primary" :disabled="submitting" @click="handleSubmit">
+          {{ submitting ? 'Submitting...' : 'Submit Application' }}
+        </button>
+      </div>
+    </div>
+
+    <!-- ===== SUCCESS ===== -->
+    <div v-if="submitted">
+      <div class="success-page">
+        <div class="success-inner">
+          <div class="check">✅</div>
+          <h1>Application Submitted!</h1>
+          <p>Thank you! Your application has been received. Seth Legatowicz will review it and be in touch with you shortly to discuss your options.</p>
+          <div class="btn-row">
+            <a href="/" class="btn btn-home">Back to Home</a>
+            <a href="https://calendly.com/sjlagency/insurance-review" target="_blank" class="btn btn-gold-outline">Schedule a Call</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="form-footer" v-if="!submitted">
+      <p><strong>SJL Insurance Agency</strong> &bull; Seth Legatowicz &bull; 214-272-2769 &bull; seth@sjlagency.com</p>
+      <p><em>As seen on TERM4SALE.com</em></p>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+<script>
+const { createApp, ref, reactive } = Vue;
+
+createApp({
+  setup() {
+    const step = ref(1);
+    const submitting = ref(false);
+    const submitted = ref(false);
+    const error = ref("");
+
+    const steps = [
+      { num: 1, label: "Your Info" },
+      { num: 2, label: "Rate & Plan" },
+      { num: 3, label: "Owner" },
+      { num: 4, label: "Beneficiaries" },
+    ];
+
+    const insured = reactive({
+      firstName: "", middleName: "", lastName: "",
+      dob: "", sex: "", height: "", weight: "",
+      address: "", city: "", state: "", zip: "",
+      homePhone: "", workPhone: "", cell: "",
+      bestTime: "", email: "",
+      dlNumber: "", ssn: "", usCitizen: "Yes",
+      birthPlace: "", occupation: "",
+      annualIncome: "", assets: "", liabilities: "",
+    });
+
+    const rate = reactive({
+      carrier: "", plan: "", faceAmount: "", rateClass: "",
+      modalPremium: "", mode: "Annual",
+      paymentPlan: "EFT", riders: "", bind: "No",
+      existingInsurance: "", replacement: "", purpose: "",
+    });
+
+    const owner = reactive({
+      isInsuredOwner: "Yes",
+      ownerName: "", trusteeName: "",
+      address: "", city: "", state: "", zip: "",
+      taxId: "", trustDate: "", trustState: "", trustType: "Revocable",
+    });
+
+    const beneficiaries = reactive({
+      primary1: { fullName: "", dob: "", percent: "", relationship: "", ssn: "" },
+      primary2: { fullName: "", dob: "", percent: "", relationship: "", ssn: "" },
+      contingent1: { fullName: "", dob: "", percent: "", relationship: "", ssn: "" },
+      contingent2: { fullName: "", dob: "", percent: "", relationship: "", ssn: "" },
+    });
+
+    const handleSubmit = async () => {
+      submitting.value = true;
+      error.value = "";
+      try {
+        const res = await fetch("/api/submit-ezlife", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            insured: { ...insured },
+            rate: { ...rate },
+            owner: { ...owner },
+            beneficiaries: {
+              primary1: { ...beneficiaries.primary1 },
+              primary2: { ...beneficiaries.primary2 },
+              contingent1: { ...beneficiaries.contingent1 },
+              contingent2: { ...beneficiaries.contingent2 },
+            },
+          }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          submitted.value = true;
+        } else {
+          error.value = data.error || "Something went wrong. Please try again.";
+        }
+      } catch {
+        error.value = "Network error. Please try again.";
+      } finally {
+        submitting.value = false;
+      }
+    };
+
+    return { step, submitting, submitted, error, steps, insured, rate, owner, beneficiaries, handleSubmit };
+  }
+}).mount('#app');
+</script>
+</body>
+</html>

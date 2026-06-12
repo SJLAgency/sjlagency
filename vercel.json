@@ -1,14 +1,8 @@
 {
-  "name": "sjlagency",
   "version": 2,
-  "builds": [
-    { "src": "*.html", "use": "@vercel/static" },
-    { "src": "css/*", "use": "@vercel/static" },
-    { "src": "js/*", "use": "@vercel/static" },
-    { "src": "images/*", "use": "@vercel/static" }
-  ],
   "routes": [
     { "src": "/", "dest": "/index.html" },
+    { "src": "/ezlife", "dest": "/ezlife.html" },
     { "src": "/life-insurance", "dest": "/life-insurance.html" },
     { "src": "/annuities", "dest": "/annuities.html" },
     { "src": "/disability-insurance", "dest": "/disability-insurance.html" },
