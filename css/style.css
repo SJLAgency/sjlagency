@@ -779,7 +779,7 @@ p { margin-bottom: 1rem; font-size: 1.05rem; }
 .content-sidebar .btn-secondary,
 .content-sidebar .btn-primary,
 .content-sidebar .btn-outline {
-  color: var(--white);
+  color: var(--white) !important;
 }
 
 .content-sidebar a:hover {
