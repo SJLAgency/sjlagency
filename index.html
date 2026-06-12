@@ -56,7 +56,6 @@
       <p>With over 30 years of experience, Seth Legatowicz and the SJL Insurance Agency team help you find the right coverage at the best rates. Based in Texas, licensed in 40+ states — serving clients coast to coast.</p>
       <div class="hero-buttons">
         <a href="/compare-quotes" class="btn btn-primary">📋 Get Your Free Quote</a>
-        <a href="tel:2142722769" class="btn btn-outline">📞 Call 214-272-2769</a>
       </div>
     </div>
   </div>
@@ -113,6 +112,7 @@
         <div class="step-number">1</div>
         <h3>Search</h3>
         <p>Use our free online quoter to search for a policy. We'll show you the best available rates based on your criteria — with absolutely no obligation to buy.</p>
+        <a href="/compare-quotes" class="btn btn-primary step-btn">📋 Get Your Free Quote</a>
       </div>
       <div class="step">
         <div class="step-number">2</div>
@@ -123,6 +123,7 @@
         <div class="step-number">3</div>
         <h3>Apply</h3>
         <p>Select the policy that's best for you. Our easy online application gets the process started. Have questions? We're here to help every step of the way.</p>
+        <a href="/ezlife" class="btn btn-gold-outline step-btn">✏️ Start Your Application</a>
       </div>
     </div>
   </div>
@@ -133,22 +134,64 @@
   <div class="container text-center">
     <h2>America's Top <span class="red-text">Insurance Providers</span></h2>
     <p style="color: var(--mid-gray); margin-bottom: 8px;">We work with the nation's leading carriers to find you the best rates.</p>
-    <div class="carrier-grid">
-      <div class="carrier-item"><img src="/images/MutualOfOmaha.png" alt="Mutual of Omaha" style="max-width: 100%; height: auto; max-height: 40px;"></div>
-      <div class="carrier-item"><img src="/images/JohnHancock.png" alt="John Hancock" style="max-width: 100%; height: auto; max-height: 40px;"></div>
-      <div class="carrier-item"><img src="/images/Principal.png" alt="Principal" style="max-width: 100%; height: auto; max-height: 40px;"></div>
-      <div class="carrier-item"><img src="/images/Corebridge.png" alt="Corebridge" style="max-width: 100%; height: auto; max-height: 40px;"></div>
-      <div class="carrier-item"><img src="/images/Allianz.png" alt="Allianz" style="max-width: 100%; height: auto; max-height: 40px;"></div>
-      <div class="carrier-item"><img src="/images/MassMutual.png" alt="MassMutual" style="max-width: 100%; height: auto; max-height: 40px;"></div>
-      <div class="carrier-item"><img src="/images/BannerLife.png" alt="Banner Life" style="max-width: 100%; height: auto; max-height: 40px;"></div>
-      <div class="carrier-item"><img src="/images/NorthAmerican.png" alt="North American" style="max-width: 100%; height: auto; max-height: 40px;"></div>
-      <div class="carrier-item"><img src="/images/PennMutual.png" alt="Penn Mutual" style="max-width: 100%; height: auto; max-height: 40px;"></div>
-      <div class="carrier-item"><img src="/images/ColumbusLife.jpg" alt="Columbus Life" style="max-width: 100%; height: auto; max-height: 40px;"></div>
-      <div class="carrier-item"><img src="/images/PacificLife.svg" alt="Pacific Life" style="max-width: 100%; height: auto; max-height: 40px;"></div>
-      <div class="carrier-item"><img src="/images/Transamerica.jpg" alt="Transamerica" style="max-width: 100%; height: auto; max-height: 40px;"></div>
-    </div>
+    <div class="carrier-grid" id="carrierGrid"></div>
   </div>
 </section>
+
+<script>
+// All available carriers
+const allCarriers = [
+  { src: "/images/MutualOfOmaha.png", alt: "Mutual of Omaha", ext: "png" },
+  { src: "/images/JohnHancock.png", alt: "John Hancock", ext: "png" },
+  { src: "/images/Principal.png", alt: "Principal", ext: "png" },
+  { src: "/images/Corebridge.png", alt: "Corebridge", ext: "png" },
+  { src: "/images/Allianz.png", alt: "Allianz", ext: "png" },
+  { src: "/images/MassMutual.png", alt: "MassMutual", ext: "png" },
+  { src: "/images/BannerLife.png", alt: "Banner Life", ext: "png" },
+  { src: "/images/NorthAmerican.png", alt: "North American", ext: "png" },
+  { src: "/images/PennMutual.png", alt: "Penn Mutual", ext: "png" },
+  { src: "/images/ColumbusLife.jpg", alt: "Columbus Life", ext: "jpg" },
+  { src: "/images/PacificLife.svg", alt: "Pacific Life", ext: "svg" },
+  { src: "/images/Transamerica.jpg", alt: "Transamerica", ext: "jpg" },
+  { src: "/images/Prudential.png", alt: "Prudential", ext: "png" },
+  { src: "/images/Protective.svg", alt: "Protective", ext: "svg" },
+];
+
+// Ensure specified carriers are always included
+const alwaysShow = ["MutualOfOmaha", "JohnHancock", "Principal", "BannerLife", "PacificLife", "Prudential", "Protective"];
+const shuffleCount = 12; // Show 12 out of 14 each time
+
+function shuffleAndShow() {
+  const grid = document.getElementById("carrierGrid");
+  if (!grid) return;
+
+  // Separate must-show from optional
+  const mustShow = allCarriers.filter(c => alwaysShow.some(a => c.alt.includes(a) || c.src.includes(a)));
+  const optional = allCarriers.filter(c => !alwaysShow.some(a => c.alt.includes(a) || c.src.includes(a)));
+
+  // Shuffle optional
+  for (let i = optional.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [optional[i], optional[j]] = [optional[j], optional[i]];
+  }
+
+  // Pick needed number of optional carriers
+  const needed = shuffleCount - mustShow.length;
+  const picked = [...mustShow, ...optional.slice(0, needed)];
+
+  // Shuffle final array to mix up order
+  for (let i = picked.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [picked[i], picked[j]] = [picked[j], picked[i]];
+  }
+
+  grid.innerHTML = picked.map(c =>
+    `<div class="carrier-item"><img src="${c.src}" alt="${c.alt}" loading="lazy"></div>`
+  ).join("");
+}
+
+shuffleAndShow();
+</script>
 
 <!-- ===== Testimonials ===== -->
 <section class="section section-light">
