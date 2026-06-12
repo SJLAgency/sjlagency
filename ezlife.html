@@ -426,12 +426,8 @@
             <input type="number" v-model="insured.annualIncome">
           </div>
           <div>
-            <label>Assets ($)</label>
-            <input type="number" v-model="insured.assets">
-          </div>
-          <div>
-            <label>Liabilities ($)</label>
-            <input type="number" v-model="insured.liabilities">
+            <label>Net Worth ($)</label>
+            <input type="number" v-model="insured.netWorth">
           </div>
         </div>
       </div>
@@ -786,7 +782,7 @@ createApp({
       bestTime: "", email: "",
       dlNumber: "", ssn: "", usCitizen: "Yes",
       birthPlace: "", occupation: "",
-      annualIncome: "", assets: "", liabilities: "",
+      annualIncome: "", netWorth: "",
     });
 
     const rate = reactive({
