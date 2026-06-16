@@ -1,13 +1,13 @@
 /* ===== SJL Insurance Agency - sjlagency.com ===== */
-/* Color Theme: Slate Charcoal + Warm Gold + Brand Red */
+/* Color Theme: Slate Charcoal + Warm Gold + Warm Amber */
 
 :root {
   --primary: #1B1B2F;
   --primary-light: #2D2D4A;
   --accent-gold: #C9A84C;
   --accent-gold-light: #E8D48B;
-  --brand-red: #CC0000;
-  --brand-red-dark: #990000;
+  --brand-warm: #D0802E;
+  --brand-warm-dark: #B0691F;
   --white: #FFFFFF;
   --off-white: #F8F7F4;
   --light-gray: #F0EFEB;
@@ -70,7 +70,7 @@ p { margin-bottom: 1rem; font-size: 1.05rem; }
 }
 
 .gold-text { color: var(--accent-gold); }
-.red-text { color: var(--brand-red); }
+.warm-text { color: var(--brand-warm); }
 
 .text-center { text-align: center; }
 
@@ -100,12 +100,12 @@ p { margin-bottom: 1rem; font-size: 1.05rem; }
 }
 
 .btn-secondary {
-  background: var(--brand-red);
+  background: var(--brand-warm);
   color: var(--white);
 }
 
 .btn-secondary:hover {
-  background: var(--brand-red-dark);
+  background: var(--brand-warm-dark);
   transform: translateY(-2px);
   box-shadow: var(--shadow-hover);
 }
@@ -168,7 +168,7 @@ p { margin-bottom: 1rem; font-size: 1.05rem; }
 }
 
 .navbar .logo-text span {
-  color: var(--brand-red);
+  color: var(--brand-warm);
 }
 
 .navbar .logo-sub {
@@ -196,7 +196,7 @@ p { margin-bottom: 1rem; font-size: 1.05rem; }
 
 .nav-links a:hover,
 .nav-links a.active {
-  color: var(--brand-red);
+  color: var(--brand-warm);
 }
 
 .nav-links a::after {
@@ -206,7 +206,7 @@ p { margin-bottom: 1rem; font-size: 1.05rem; }
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--brand-red);
+  background: var(--brand-warm);
   transition: var(--transition);
 }
 
@@ -316,6 +316,30 @@ p { margin-bottom: 1rem; font-size: 1.05rem; }
   display: inline-block;
 }
 
+.hero-headline {
+  font-size: 3.2rem;
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  line-height: 1.15;
+}
+
+.hero-headline .highlight {
+  color: var(--accent-gold);
+  border-bottom: 3px solid var(--accent-gold);
+  display: inline-block;
+  line-height: 1.1;
+}
+
+.hero-subline {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--accent-gold);
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
 .hero h2 {
   font-size: 1.3rem;
   color: var(--accent-gold-light);
@@ -413,7 +437,7 @@ p { margin-bottom: 1rem; font-size: 1.05rem; }
 .service-card .learn-more {
   display: inline-block;
   margin-top: 16px;
-  color: var(--brand-red);
+  color: var(--brand-warm);
   text-decoration: none;
   font-weight: 600;
   font-size: 0.9rem;
@@ -458,6 +482,17 @@ p { margin-bottom: 1rem; font-size: 1.05rem; }
   display: inline-block !important;
   font-size: 0.9rem !important;
   padding: 10px 24px !important;
+}
+
+.step-link {
+  color: var(--accent-gold);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s ease;
+}
+.step-link:hover {
+  color: var(--accent-gold-light);
 }
 
 /* ===== Testimonials ===== */
@@ -532,7 +567,7 @@ p { margin-bottom: 1rem; font-size: 1.05rem; }
 .faq-question .toggle-icon {
   font-size: 1.2rem;
   transition: var(--transition);
-  color: var(--brand-red);
+  color: var(--brand-warm);
 }
 
 .faq-item.active .faq-question .toggle-icon {
@@ -590,7 +625,7 @@ p { margin-bottom: 1rem; font-size: 1.05rem; }
 }
 
 .contact-info-item a {
-  color: var(--brand-red);
+  color: var(--brand-warm);
   text-decoration: none;
   font-weight: 500;
 }
@@ -666,7 +701,7 @@ p { margin-bottom: 1rem; font-size: 1.05rem; }
   margin-bottom: 12px;
 }
 
-.footer-brand .logo-text span { color: var(--brand-red); }
+.footer-brand .logo-text span { color: var(--brand-warm); }
 
 .footer-brand p {
   font-size: 0.9rem;
@@ -709,6 +744,35 @@ p { margin-bottom: 1rem; font-size: 1.05rem; }
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
+}
+
+/* Social Icons in Footer */
+.footer-social {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.footer-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.5);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+.footer-social a:hover {
+  background: var(--brand-warm);
+  color: var(--white);
+}
+.footer-bottom {
+  flex-direction: column;
 }
 
 .footer-bottom p {
@@ -770,7 +834,7 @@ p { margin-bottom: 1rem; font-size: 1.05rem; }
 }
 
 .content-sidebar a {
-  color: var(--brand-red);
+  color: var(--brand-warm);
   text-decoration: none;
   font-size: 0.95rem;
 }
@@ -784,6 +848,29 @@ p { margin-bottom: 1rem; font-size: 1.05rem; }
 
 .content-sidebar a:hover {
   text-decoration: underline;
+}
+
+/* About page photo */
+.about-photo-wrap {
+  float: right;
+  margin: 4px 0 20px 28px;
+  width: 260px;
+  max-width: 45%;
+}
+.about-photo {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12), 0 0 0 3px var(--accent-gold);
+  display: block;
+}
+@media (max-width: 640px) {
+  .about-photo-wrap {
+    float: none;
+    margin: 0 auto 24px auto;
+    max-width: 280px;
+    width: 100%;
+  }
 }
 
 /* ===== Insurance Types Grid ===== */
@@ -818,7 +905,7 @@ p { margin-bottom: 1rem; font-size: 1.05rem; }
 
 /* ===== CTA Banner ===== */
 .cta-banner {
-  background: linear-gradient(135deg, var(--brand-red) 0%, #990000 100%);
+  background: linear-gradient(135deg, var(--brand-warm) 0%, var(--brand-warm-dark) 100%);
   padding: 60px 0;
   text-align: center;
   color: var(--white);
